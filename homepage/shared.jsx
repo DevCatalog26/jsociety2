@@ -414,7 +414,34 @@ function ShowroomEvents({ items = [] }) {
 /* ---------- Events calendar: months that expand to their events (accordion) ---------- */
 function EventRow({ e, last }) {
   const [hov, setHov] = useState(false);
+  const bp = useBreakpoint();
   const range = !!e.endDate;
+  const registerLink = (
+    <a href={e.href || undefined} target={e.href ? '_blank' : undefined} rel={e.href ? 'noopener noreferrer' : undefined} onClick={e.href ? undefined : () => goNav('contact.html')} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontFamily: 'var(--js-mono)', fontSize: 10.5, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--js-ink)', borderBottom: '1px solid var(--js-ink)', paddingBottom: 3, cursor: 'pointer', whiteSpace: 'nowrap', opacity: hov ? 0.55 : 1, transition: 'opacity var(--js-dur) var(--js-ease)' }}>Register <Icon name="arrowRight" size={13} /></a>
+  );
+  const cityTag = (
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--js-mono)', fontSize: 11, letterSpacing: '0.08em', color: 'var(--js-espresso)' }}><Icon name="pin" size={14} stroke={1.4} />{e.city}</span>
+  );
+  // Mobile: single column — inline date line, then chip/title/body, then city + register.
+  if (bp === 'mobile') {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: '22px 0', borderBottom: last ? 'none' : '1px solid var(--js-mist)' }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
+          <span style={{ fontFamily: 'var(--js-serif)', fontWeight: 500, fontSize: 28, lineHeight: 0.9, color: 'var(--js-ink)', letterSpacing: '-0.01em' }}>{e.date}{range ? <span style={{ color: 'var(--js-stone)' }}>&ndash;{e.endDate}</span> : ''}</span>
+          <span style={{ fontFamily: 'var(--js-mono)', fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--js-stone)' }}>{e.day}{range ? ` – ${e.endDay}` : ''}</span>
+        </div>
+        <div>
+          <span style={{ display: 'inline-block', fontFamily: 'var(--js-mono)', fontSize: 9.5, letterSpacing: '0.13em', textTransform: 'uppercase', color: 'var(--js-paper)', background: 'var(--js-ink)', padding: '4px 9px', borderRadius: 'var(--js-radius-sm)', marginBottom: 10 }}>{e.season}</span>
+          <h4 style={{ fontFamily: 'var(--js-serif)', fontWeight: 500, fontSize: 21, lineHeight: 1.15, letterSpacing: '-0.008em', color: 'var(--js-ink)', margin: 0, overflowWrap: 'break-word' }}>{e.title}</h4>
+          <p style={{ fontFamily: 'var(--js-sans)', fontSize: 15, lineHeight: 1.55, color: 'var(--js-fg-body)', margin: '8px 0 0' }}>{e.body}</p>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px 16px', flexWrap: 'wrap' }}>
+          {cityTag}
+          {registerLink}
+        </div>
+      </div>
+    );
+  }
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '112px 1fr', gap: 'clamp(16px, 3vw, 36px)', alignItems: 'baseline', padding: 'clamp(20px, 2.6vw, 28px) 0', borderBottom: last ? 'none' : '1px solid var(--js-mist)' }}>
       <div style={{ textAlign: 'left' }}>
@@ -429,9 +456,9 @@ function EventRow({ e, last }) {
           </div>
           <p style={{ fontFamily: 'var(--js-sans)', fontSize: 15.5, lineHeight: 1.55, color: 'var(--js-fg-body)', margin: '10px 0 0', maxWidth: 560 }}>{e.body}</p>
         </div>
-        <div style={{ flex: '0 0 auto', display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'flex-start', minWidth: 168 }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: 'var(--js-mono)', fontSize: 11, letterSpacing: '0.08em', color: 'var(--js-espresso)' }}><Icon name="pin" size={14} stroke={1.4} />{e.city}</span>
-          <a href={e.href || undefined} target={e.href ? '_blank' : undefined} rel={e.href ? 'noopener noreferrer' : undefined} onClick={e.href ? undefined : () => goNav('contact.html')} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontFamily: 'var(--js-mono)', fontSize: 10.5, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--js-ink)', borderBottom: '1px solid var(--js-ink)', paddingBottom: 3, cursor: 'pointer', marginTop: 2, opacity: hov ? 0.55 : 1, transition: 'opacity var(--js-dur) var(--js-ease)' }}>Register <Icon name="arrowRight" size={13} /></a>
+        <div style={{ flex: '0 0 auto', display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'flex-start', minWidth: 168, marginTop: 2 }}>
+          {cityTag}
+          {registerLink}
         </div>
       </div>
     </div>
