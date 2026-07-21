@@ -310,7 +310,32 @@ function readLbOrder() { try { const v = JSON.parse(localStorage.getItem(LB_ORDE
 function writeLbOrder(o) { try { if (Array.isArray(o) && o.length) localStorage.setItem(LB_ORDER_KEY, JSON.stringify(o)); else localStorage.removeItem(LB_ORDER_KEY); } catch (e) {} }
 
 const LB_TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "sectionOrder": []
+  "sectionOrder": [
+    "statement",
+    "tiles",
+    "solo01",
+    "duo02",
+    "duo03",
+    "title-sets",
+    "prints-sets-2",
+    "title-yg",
+    "duo04",
+    "solo-cable",
+    "prints-sets",
+    "solo06",
+    "title-details",
+    "solo-cognac",
+    "duo10",
+    "duo08",
+    "title-denim",
+    "duo05",
+    "solo07",
+    "duo08-2",
+    "details1",
+    "duo08-3",
+    "solo09",
+    "details3"
+  ]
 }/*EDITMODE-END*/;
 
 function SectionOrderRows({ sections, order, onChange }) {
