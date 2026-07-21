@@ -236,7 +236,7 @@ function DropItem({ children, onClick }) {
 /* ---------- Footer (paper ground, horizontal — matches v2 wireframe) ---------- */
 const FOOTER_LINKS = [['Home', 'index.html#top'], ['About us', 'about.html'], ['Events', 'events.html'], ['Lookbook', 'look-book.html'], ['Contact', 'contact.html']];
 const SOCIALS = ['instagram'];
-const LEGAL = ['Privacy policy', 'Terms of service', 'Cookies settings'];
+const LEGAL = [['Privacy policy', 'privacy-policy.html'], ['Terms & conditions', 'terms-conditions.html']];
 
 function Footer() {
   const bp = useBreakpoint();
@@ -255,18 +255,19 @@ function Footer() {
         </div>
         <div style={{ borderTop: '1px solid var(--js-mist)', marginTop: 'clamp(36px, 5vw, 52px)', paddingTop: 26, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: stack ? 14 : 28, flexWrap: 'wrap' }}>
           <span style={{ fontFamily: 'var(--js-mono)', fontSize: 11, letterSpacing: '0.14em', color: 'var(--js-stone)' }}>© 2026 j. society · Est. 2020 · New York</span>
-          {LEGAL.map(l => <FooterLink key={l} small>{l}</FooterLink>)}
+          {LEGAL.map(([t, r]) => <FooterLink key={t} small onClick={() => goNav(r)}>{t}</FooterLink>)}
         </div>
       </div>
     </footer>
   );
 }
+const SOCIAL_URLS = { instagram: 'https://www.instagram.com/j.societyny/' };
 function SocialIcon({ name }) {
   const [hov, setHov] = useState(false);
   return (
-    <span onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)} style={{ display: 'flex', cursor: 'pointer', color: hov ? 'var(--js-ink)' : 'var(--js-stone)', transition: 'color var(--js-dur) var(--js-ease)' }}>
+    <a href={SOCIAL_URLS[name] || '#'} target="_blank" rel="noopener" aria-label={name} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)} style={{ display: 'flex', cursor: 'pointer', color: hov ? 'var(--js-ink)' : 'var(--js-stone)', transition: 'color var(--js-dur) var(--js-ease)' }}>
       <Icon name={name} size={18} stroke={1.4} />
-    </span>
+    </a>
   );
 }
 function FooterLink({ children, onClick, small }) {
