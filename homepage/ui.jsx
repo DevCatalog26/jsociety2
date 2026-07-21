@@ -244,18 +244,19 @@ function Footer() {
   return (
     <footer style={{ background: 'var(--js-paper)', color: 'var(--js-ink)', borderTop: '1px solid var(--js-mist)', padding: 'clamp(48px, 7vw, 72px) clamp(20px, 5vw, 44px) 32px' }}>
       <div style={{ maxWidth: 1312, margin: '0 auto' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 32, flexWrap: 'wrap', flexDirection: stack ? 'column' : 'row', textAlign: stack ? 'center' : 'left' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: stack ? 28 : 32, flexWrap: stack ? 'nowrap' : 'wrap', flexDirection: stack ? 'column' : 'row', textAlign: stack ? 'center' : 'left' }}>
           <div onClick={() => goNav('index.html#top')} style={{ fontFamily: 'var(--js-serif)', fontWeight: 500, fontSize: 30, letterSpacing: '0.01em', cursor: 'pointer', lineHeight: 1, flex: stack ? 'none' : 1 }}>j. society</div>
-          <nav style={{ display: 'flex', gap: stack ? 20 : 32, flexWrap: 'wrap', justifyContent: 'center' }}>
+          <nav style={{ display: stack ? 'grid' : 'flex', gridTemplateColumns: stack ? 'auto' : undefined, gap: stack ? 14 : 32, flexWrap: 'wrap', justifyContent: 'center', justifyItems: 'center' }}>
             {FOOTER_LINKS.map(([t, r]) => <FooterLink key={t} onClick={() => goNav(r)}>{t}</FooterLink>)}
           </nav>
           <div style={{ display: 'flex', gap: 18, flex: stack ? 'none' : 1, justifyContent: 'flex-end', color: 'var(--js-espresso)' }}>
             {SOCIALS.map(s => <SocialIcon key={s} name={s} />)}
           </div>
         </div>
-        <div style={{ borderTop: '1px solid var(--js-mist)', marginTop: 'clamp(36px, 5vw, 52px)', paddingTop: 26, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: stack ? 14 : 28, flexWrap: 'wrap' }}>
-          <span style={{ fontFamily: 'var(--js-mono)', fontSize: 11, letterSpacing: '0.14em', color: 'var(--js-stone)' }}>© 2026 j. society · Est. 2020 · New York</span>
-          {LEGAL.map(([t, r]) => <FooterLink key={t} small onClick={() => goNav(r)}>{t}</FooterLink>)}
+        <div style={{ borderTop: '1px solid var(--js-mist)', marginTop: 'clamp(36px, 5vw, 52px)', paddingTop: 26, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: stack ? 16 : 28, flexWrap: 'wrap', flexDirection: stack ? 'column' : 'row', textAlign: 'center' }}>
+          {stack && <div style={{ display: 'flex', gap: 24, justifyContent: 'center' }}>{LEGAL.map(([t, r]) => <FooterLink key={t} small onClick={() => goNav(r)}>{t}</FooterLink>)}</div>}
+          <span style={{ fontFamily: 'var(--js-mono)', fontSize: 11, letterSpacing: '0.14em', color: 'var(--js-stone)', lineHeight: 1.8 }}>© 2026 j. society · Est. 2020 · New York</span>
+          {!stack && LEGAL.map(([t, r]) => <FooterLink key={t} small onClick={() => goNav(r)}>{t}</FooterLink>)}
         </div>
       </div>
     </footer>
