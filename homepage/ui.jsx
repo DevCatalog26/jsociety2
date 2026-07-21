@@ -201,8 +201,13 @@ function Nav({ solid }) {
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>Lookbook <Icon name="chevronDown" size={13} /></span>
           </NavLink>
           {colOpen && (
-            <div style={{ position: 'absolute', top: 'calc(100% + 18px)', left: '50%', transform: 'translateX(-50%)', minWidth: 230, background: 'var(--js-paper)', border: '1px solid var(--js-mist)', boxShadow: 'var(--js-shadow-lg)', padding: '10px 0', animation: 'js-menu-in var(--js-dur) var(--js-ease)' }}>
-              {COLLECTIONS.map(([t, r]) => <DropItem key={t} onClick={() => { setColOpen(false); goNav(r); }}>{t}</DropItem>)}
+            /* Positioning wrapper owns the centering transform; the panel inside owns the
+               entrance animation — js-menu-in animates transform, so putting both on one
+               element made the menu jump sideways when the animation finished. */
+            <div style={{ position: 'absolute', top: 'calc(100% + 18px)', left: '50%', transform: 'translateX(-50%)' }}>
+              <div style={{ minWidth: 230, background: 'var(--js-paper)', border: '1px solid var(--js-mist)', boxShadow: 'var(--js-shadow-lg)', padding: '10px 0', animation: 'js-menu-in var(--js-dur) var(--js-ease)' }}>
+                {COLLECTIONS.map(([t, r]) => <DropItem key={t} onClick={() => { setColOpen(false); goNav(r); }}>{t}</DropItem>)}
+              </div>
             </div>
           )}
         </div>
